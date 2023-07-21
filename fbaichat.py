@@ -9,6 +9,7 @@ load_dotenv()
 
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 chat_index = None
+message_count = 0
 
 
 def load_index():
@@ -65,16 +66,18 @@ def fbwebhook():
         message = data['entry'][0]['messaging'][0]['message']
         sender_id = data['entry'][0]['messaging'][0]['sender']['id']
         # Here we get message text and check specific text so we can send response specificaly.
-        
+        reply_message = chatbot(message['text'])
         request_body = {
             "recipient": {
                 "id": sender_id
             },
             "message": {
-                "text": chatbot(message['text'])
+                "text": reply_message
             }
         }
         response = requests.post(API, json=request_body).json()
+        message_count += 1
+        print("MessageNum=" +str(message_count) + " Text= " + reply_message)
         return response
 
     except:
