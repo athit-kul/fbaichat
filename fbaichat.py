@@ -76,8 +76,10 @@ def fbwebhook():
             }
         }
         response = requests.post(API, json=request_body).json()
+
         message_count += 1
         print("MessageNum=" +str(message_count) + " Text= " + reply_message)
+
         return response
 
     except:
