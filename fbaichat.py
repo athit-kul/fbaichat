@@ -83,16 +83,9 @@ def fbwebhook():
 
         return response
 
-    except:
+    except Exception as e:
         # Here we are store the file to our server who send by user from facebook messanger.
-        try:
-            mess = data['entry'][0]['messaging'][0]['message']['attachments'][0]['payload']['url']
-            print("for url-->", mess)
-            json_path = requests.get(mess)
-            filename = mess.split('?')[0].split('/')[-1]
-            open(filename, 'wb').write(json_path.content)
-        except:
-            print("Noot Found-->")
+       print(str(e))
 
     return 'ok'
 
