@@ -59,6 +59,7 @@ def fbverify():
 
 @app.route("/", methods=['POST'])
 def fbwebhook():
+    global message_count
     data = request.get_json()
     print(data)
     try:
@@ -78,7 +79,7 @@ def fbwebhook():
         response = requests.post(API, json=request_body).json()
 
         message_count += 1
-        print("MessageNum=" +str(message_count) + " Text= " + reply_message)
+        print("MessageNum=" + str(message_count) + " Text= " + str(reply_message))
 
         return response
 
